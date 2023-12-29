@@ -1,0 +1,6 @@
+B1:
+    vi spark-values => Copy file vào
+B2:
+    kubectl create namespace apache-spark
+B3:
+    helm install apache-spark bitnami/spark -n apache-spark -f spark-values.yaml

@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------
+                Cài kibana và elasticsearch
+B1:
+    kubectl create namespace my-logging
+B2:
+    helm install my-release bitnami/elasticsearch \
+  --namespace my-logging \
+  --set elasticsearch.master.persistence.enabled=false
+B3:
+    helm install my-release-kibana bitnami/kibana \
+  --namespace my-logging \
+  --set elasticsearchHost=my-release-master-headless.elasticsearch.svc.cluster.local
+
+--------------------------------------------------------------------------
+                Cài prothemeus và grafana
+B1:
+    kubectl create namespace my-monitoring
+B2:
+    helm install my-release-prometheus bitnami/prometheus \
+  --namespace my-monitoring
+B3:
+    helm install my-release-grafana bitnami/grafana \
+  --namespace my-monitoring
+B5:
+    kubectl port-forward svc/my-release-grafana 3000:80 --namespace my-monitoring

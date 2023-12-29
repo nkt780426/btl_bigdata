@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrapy-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrapy-app
+  template:
+    metadata:
+      labels:
+        app: scrapy-app
+    spec:
+      containers:
+      - name: scrapy-app-container
+        image: ngonluahoangkim2002/scrapy-app:v2  # Thay thế "latest" bằng tag cụ thể nếu có
+        ports:
+        - containerPort: 80  # Cổng mà ứng dụng của bạn lắng nghe
+

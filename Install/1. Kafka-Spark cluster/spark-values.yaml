@@ -1,0 +1,11 @@
+sparkMaster:
+  enabled: true
+  replicas: 1  # Số node master
+  cpu: "0.4"
+  memory: "400Mi"
+
+sparkWorker:
+  enabled: true
+  replicas: 2  # Số node executor
+  cpu: "0.5"
+  memory: "500Mi"

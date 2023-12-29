@@ -1,0 +1,11 @@
+kafka:
+  enabled: true
+  replicas: 2
+  cpu: "200m"
+  memory: "200Mi"
+  storage: "1Gi"
+  persistence:
+    size: "1Gi"
+  topics:
+    - name: stack-exchange
+      partitions: 2

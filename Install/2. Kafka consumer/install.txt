@@ -1,0 +1,10 @@
+B1:
+    Tạo secret trong k8s:
+        kubectl create secret generic aws-credentials \
+            --from-literal=AWS_ACCESS_KEY_ID=AKIA6MBT2EAEQV4OPJB3 \
+            --from-literal=AWS_SECRET_ACCESS_KEY=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
+B2:
+    vi streaming-deployment.yaml => Copy file ở thư mục này vào
+
+B3:
+    kubectl apply -f streaming-deployment.yaml

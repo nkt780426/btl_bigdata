@@ -1,0 +1,6 @@
+B1:
+    vi kafka-values.yaml => Copy file vào
+B2:
+    kubectl create namespace apache-kafka
+B3:
+    helm install apache-kafka bitnami/kafka -n apache-kafka -f kafka-values.yaml

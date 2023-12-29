@@ -1,0 +1,4 @@
+B1:
+    vi producer-deployment.yaml => Copy
+B2:
+    kubectl apply -f producer-deployment.yaml
