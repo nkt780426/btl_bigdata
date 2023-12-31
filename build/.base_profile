@@ -1,0 +1,16 @@
+# Set biến môi trường hadoop
+
+export SPARK_HOME=$PWD/spark-3.5.0-bin-hadoop3
+export PATH=$PATH:$SPARK_HOME/bin
+
+# set access, secret key của tài khoản aws của bạn tại đây
+# nếu bạn đang dùng tài khoản IAM, hãy đảm bảo bạn có đủ quyền để thao tác với aws
+set AWS_ACCESS_KEY_ID=AKIA6MBT2EAEQV4OPJB3
+set AWS_SECRET_ACCESS_KEY=dTOnlfKyohRqwR/rBsGuW6XZ0PjE2KLtbdijH+m
+
+# Set biến cho streaming app
+set KAFKA_TOPIC_NAME=stack_exchange
+set KAFKA_BOOTSTRAP_SERVERS=k8s://http://example.com/kafka
+
+set S3_BUCKET=btl_bigdata
+set S3_FOLDER_NAME=test

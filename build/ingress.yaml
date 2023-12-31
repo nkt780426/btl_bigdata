@@ -16,14 +16,14 @@ spec:
             service:
               name: kafka-service
               port:
-                number: 5601
+                number: 9092
         - path: /spark
           pathType: Prefix
           backend:
             service:
               name: grafna-service
               port:
-                number: 3000
+                number: 7070
         - path: /grafana
           pathType: Prefix
           backend:
@@ -37,8 +37,4 @@ spec:
             service:
               name: grafna-service
               port:
-                number: 3000
-  tls:
-  - hosts:
-    - example.com
-    secretName: example-tls-secret
+                number: 5601

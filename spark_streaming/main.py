@@ -7,15 +7,16 @@ import os
 import preprocess
 
 # Kafka settings
-kafka_topic_name = "stack_exchange"
-kafka_bootstrap_servers = "k8s://http://example.com/kafka"
+kafka_topic_name = os.environ.get("KAFKA_TOPIC_NAME", "stack_exchange")
+kafka_bootstrap_servers = os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "k8s://http://example.com/kafka")
 
 # AWS S3 settings
 aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
-s3_bucket = "btl-bigdata"
-s3_folder_name = "test"  # Thư mục trong bucket
+s3_bucket = os.environ.get("S3_BUCKET", "btl-bigdata")
+s3_folder_name = os.environ.get("S3_FOLDER_NAME", "test")  # Thư mục trong bucket
 s3_output_path = "s3a://{}/{}".format(s3_bucket, s3_folder_name)
+
 
 # Initialize Spark Session with package configurations
 spark = (
