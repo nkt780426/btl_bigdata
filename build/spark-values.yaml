@@ -1,11 +1,19 @@
-sparkMaster:
-  enabled: true
-  replicas: 1  # Số node master
-  cpu: "0.4"
-  memory: "400Mi"
+master:
+  replicas: 1
+  resources:
+    requests:
+      memory: "300Mi"
+      cpu: "0.4"
+    limits:
+      memory: "500Mi"
+      cpu: "0.5"
 
-sparkWorker:
-  enabled: true
-  replicas: 2  # Số node executor
-  cpu: "0.5"
-  memory: "500Mi"
+worker:
+  replicas: 1
+  resources:
+    requests:
+      memory: "500Mi"
+      cpu: "0.5"
+    limits:
+      memory: "600Mi"
+      cpu: "0.6"  # Thay dấu phẩy bằng dấu chấm ở đây

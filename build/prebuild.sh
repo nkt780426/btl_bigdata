@@ -32,8 +32,7 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 echo "Install kubectl successfully!"
 
 # Cài đặt Certbot để tạo chứng chỉ ssl
-sudo apt-get update
-sudo apt-get install certbot
+sudo apt-get install certbot -y
 echo "Install Certbot successfully!"
 
 echo "--------------------------------------------------------------------------"

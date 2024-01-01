@@ -1,0 +1,8 @@
+server:
+  resources:
+    requests:
+      memory: "400Mi"
+      cpu: "0.5"
+    limits:
+      memory: "500Mi"
+      cpu: "0.6"

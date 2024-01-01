@@ -1,0 +1,11 @@
+image:
+  registry: docker.io
+  repository: bitnami/kibana
+  tag: latest
+resources:
+  requests:
+    memory: "300Mi"
+    cpu: "0.4"
+  limits:
+    memory: "500Mi"
+    cpu: "0.6"

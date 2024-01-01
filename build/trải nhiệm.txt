@@ -1,0 +1,24 @@
+# Bật mestric server để kiểm tra tài nguyên bằng kubectl top
+- Với minikube:
+    minikube addons enable metrics-server
+- Với kops:
+    Dùng khi tạo kop create, sửa file yaml:
+        kops edit cluster --name <tên-cluster>
+    File yaml:
+        apiVersion: kops.k8s.io/v1alpha2
+        kind: Cluster
+        metadata:
+            name: <tên-cluster>
+        spec:
+            additionalPolicies:
+                master: |
+                    someMasterPolicy: true
+                node: |
+                    someNodePolicy: true
+            # ... (phần cấu hình khác)
+    Triển khai:
+        kops update cluster --name <tên-cluster> --yes
+- Kiểm tra:
+    kubectl top pod <tên-pod> -n <tên-namespace>
+
+# Kiểm tra kafka cluster: có bao nhiêu broker, topic, 
