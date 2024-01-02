@@ -21,4 +21,4 @@
 - Kiểm tra:
     kubectl top pod <tên-pod> -n <tên-namespace>
 
-# Kiểm tra kafka cluster: có bao nhiêu broker, topic, 
+# Kiểm tra kafka cluster: có bao nhiêu broker, topic

@@ -30,10 +30,18 @@ echo "--------------------------------------------------------------------------
 # Cài đặt kubectl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 echo "Install kubectl successfully!"
+echo "--------------------------------------------------------------------------"
 
 # Cài đặt Certbot để tạo chứng chỉ ssl
 sudo apt-get install certbot -y
 echo "Install Certbot successfully!"
+echo "--------------------------------------------------------------------------"
+
+# Cài AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+echo "Install AWS CLI successfully!"
 
 echo "--------------------------------------------------------------------------"
 echo -e "\U1F44F \U1F44F \U1F44F Prepare sucessfully to build project! \U1F44F \U1F44F \U1F44Fs"

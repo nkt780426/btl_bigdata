@@ -1,0 +1,27 @@
+master:
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  limits:
+    memory: "400Mi"
+    cpu: "0.3"
+
+worker:
+  replicas: 2
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false  
+  limits:
+    memory: "600Mi"
+    cpu: "0.5"
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPU: 0.5
+    targetMemory: 600Mi
+
+serviceAccount:
+  create: false

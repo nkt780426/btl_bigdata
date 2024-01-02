@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrapy-kafka-producer
+  labels:
+    app: scrapy-kafka-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrapy-kafka-producer
+  template:
+    metadata:
+      labels:
+        app: scrapy-kafka-producer
+    spec:
+      containers:
+      - name: scrapy-kafka-producer
+        image: docker push ngonluahoangkim2002/scrapy-kafka-proceducer:tagname:v1
+        resources:
+          limits:
+            cpu: "400m"  # Đặt giới hạn CPU, có thể điều chỉnh tùy theo yêu cầu
+            memory: "256Mi"  # Đặt giới hạn bộ nhớ, có thể điều chỉnh tùy theo yêu cầu

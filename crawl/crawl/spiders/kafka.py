@@ -10,7 +10,7 @@ page = {"start": 1, "end": 10000}
 crawl_url = "https://superuser.com/questions?tab=newest&pagesize=50"
 
 kafka_topic_name = "stack_exchange"
-kafka_bootstrap_servers = "k8s://http://example.com/kafka"
+kafka_bootstrap_servers = "apache-kafka.apache-kafka.svc.cluster.local:9092"
 
 
 class Spider(scrapy.Spider):

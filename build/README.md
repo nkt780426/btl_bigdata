@@ -6,9 +6,9 @@
 - **Tuyên bố miễn trừ trách nhiệm: Chúng tôi không chịu bất kỳ trách nhiệm nào đối với khoản phí phát sinh khi bạn làm theo hướng dẫn sau đây**
 - Hướng dẫn sau sử dụng trình soạn thảo vim mặc định của linux, chi tiết xem tại [đây](https://viblo.asia/p/co-ban-ve-vim-cho-nguoi-moi-bat-dau-GrLZDavnlk0). Về cơ bản bạn chỉ cần phải thực hiện các lệnh :wq! để thoát và lưu thay đổi file hoặc :q! để thoát và không lưu thay đổi file
 
-## Workspace
-- Trong linux có 2 loại tài khoản chính là *root user* và *regular user* (tài khoản thường), khi thực hiện các lệnh sau hãy chú ý bạn đang dùng tài khoản gì. Cách chuyển đổi giữa 2 loại tài khoản như sau
--  Thoát root user
+## Chuẩn bị
+Trong linux có 2 loại tài khoản chính là *root user* và *regular user* (tài khoản thường), khi thực hiện các lệnh sau hãy chú ý bạn đang dùng tài khoản gì. Cách chuyển đổi giữa 2 loại tài khoản như sau
+- Thoát root user
 ```bash
     exit
 ```
@@ -16,18 +16,13 @@
 ```bash   
     sudo su
 ```
-## Chuẩn bị môi trường và cấu hình
-Sử dụng root user cài đặt các pakage sau
-### Cài git
+Sử dụng root user clone project về máy
 ```bash
     sudo apt-get install git -y
-```
-### Clone project trên vào workspace
-```bash
     git clone https://github.com/nkt780426/btl_bigdata.git
     cd btl_bigdata
 ```
-### Project sử dụng phiên bản oracle-java 17 và apache spark 3.5.0. Nếu bạn muốn thay đổi phiên bản [java](https://www.oracle.com/java/technologies/downloads/) và [apache spark](https://spark.apache.org/downloads.html) chỉ cần thay đổi trong đoạn mã *prebuild.sh*. Sau thay đổi tiến hành chạy đoạn mã sau ở workspace với root user
+Project sử dụng phiên bản oracle-java 17 và apache spark 3.5.0. Nếu bạn muốn thay đổi phiên bản [java](https://www.oracle.com/java/technologies/downloads/) và [apache spark](https://spark.apache.org/downloads.html) chỉ cần thay đổi trong đoạn mã *prebuild.sh*. Sau thay đổi tiến hành chạy đoạn mã sau ở workspace với root user
 ```bash 
     cd build
     chmod +x prebuild.sh
@@ -35,20 +30,22 @@ Sử dụng root user cài đặt các pakage sau
     # Trong quá trình chạy chọn phiên bản java 17 đã cài
     ./prebuild.sh    
 ```
-### Tạo AWS_ACCESS_KEY và AWS_SECRET_KEY
+Tạo AWS_ACCESS_KEY và AWS_SECRET_KEY
 - Đăng nhập tài khoản aws của bạn tại [aws](https://aws.amazon.com/)
 - Chọn vào tài khoản trên giao diện => Security credentials
 - Lướt xuống dưới tại mục access key và tạo chúng, hãy download về và giữ nó bí mật cho bản thân
+- Cấu hình tài khoản vào aws cli
+```bash
+    # Chạy lệnh sau và làm theo hướng dẫn, chú ý set miền đúng với tài khoản aws của bạn, nếu không khả năng cao bạn sẽ mất phí dù thực hiện service free của aws
+    aws configure
+```
 
-### Cài Docker. 
-Nếu bạn sử dụng wsl2 và đã cài docker trên windows rồi thì không cần cài nữa, vì bản thân docker đã ở trong wsl2. Nếu bạn không có xem cách cài đặt tại [đây](https://docs.docker.com/desktop/install/windows-install/)
-
-
+Cài Docker: Nếu bạn sử dụng wsl2 và đã cài docker trên windows rồi thì không cần cài nữa, vì bản thân docker đã ở trong wsl2. Nếu bạn không có xem cách cài đặt tại [đây](https://docs.docker.com/desktop/install/windows-install/)
 ## Tạo cụm k8s
-### Sử dụng minikubex
+### C1: Sử dụng minikube
 Lý thuyết
 
-- Việc bạn sử dụng minikube để triển khai cụm k8s là không thực tế khi đi làm, vì cách này chỉ build cụm k8s trên 1 node/host duy nhất không phản ánh khả năng kết hợp nhiều host để tạo thành cụm k8s có khả năng xử lý cao. Tuy nhiên nhược điểm của nó chỉ có vậy, khi bạn build thành công cụm k8s mọi thao tác của project sau đều hoạt động. Ưu điểm của giải pháp này, là việc học tập cách triển khai 1 ứng dụng trên môi trường k8s thực tế (việc sau đây chúng ta sẽ làm) cũng như học các câu lệnh kubectl để quản lý tài nguyên k8s trong môi trường prodcution
+- Việc bạn sử dụng minikube để triển khai cụm k8s là không thực tế khi đi làm, vì cách này chỉ build cụm k8s trên 1 node/host duy nhất không phản ánh khả năng kết hợp nhiều host để tạo thành cụm k8s có khả năng xử lý cao. Tuy nhiên nhược điểm của nó chỉ có vậy, khi bạn build thành công cụm k8s mọi thao tác của project sau đều hoạt động (do đã giới hạn tài nguyên phù hợp với ec2 instance phiên bản free). Ưu điểm của giải pháp này là việc học tập cách triển khai 1 ứng dụng trên môi trường k8s thực tế (việc sau đây chúng ta sẽ làm) cũng như học các câu lệnh kubectl để quản lý tài nguyên k8s trong môi trường prodcution
 
 Chuẩn bị
 
@@ -58,8 +55,9 @@ Tạo cụm k8s
 - Triển khai cụm k8s trên **regular user**
     ```bash
         # Một khi đã start cụm thì sẽ không thể cung cấp tài nguyên hãy chắc chắn cung cấp đủ tài nguyên khi start minikube
-            minikube start --cpus=<your cpu size> --memory=<your mem size> --disk-size=<your disk size>
-        # Kích hoạt plugin metrics-server để có thể xem được lượng tài nguyên
+            minikube start --cpus=3 --memory=4096 --disk-size=<your disk size>
+        # Kích hoạt plugin metrics-server để có thể xem được lượng tài nguyên bằng câu lệnh kubectl top ...
+        # Nếu không thích thì không cần
             minikube addons enable metrics-server
     '''
 Kiểm tra
@@ -67,24 +65,18 @@ Kiểm tra
     # Câu lệnh sau sẽ hiện ra số node có được sử dụng tạo cụm k8s và bạn sẽ chỉ thấy 1 node tên minikube
     kubectl get nodes
 ```
-### Sử dụng kops
+### C2: Sử dụng kops
 
 Lý thuyết
 
 - Giống như eks, gks, ... Kops là 1 kubernetes operators dùng để tạo cụm k8s 1 cách tự động. 
-- Ưu điểm kops: Có thể tạo cụm k8s trên nhiều clouds provider khác nhau thậm chí on-primise. Các tool như eks, gks, ... chỉ tạo được cụm k8s trên chính cloud provider của họ, không có khả năng build cụm k8s đa nền tảng. Ngoài ra phiên bản kuberneter cài đặt là phiên bản free trên github, bạn không cần phải trả bất kỳ khoản phí nào liên quan đến kubernetes operator, nếu sử dụng các tool khác họ sẽ cài phiên bản kuberneter của riêng họ. Các tool tương tự kops: kubeadm (không hay dùng nữa vì không tạo cụm k8s auto mà phải config rất nhiều)
-- Nhược điểm: Bạn phải tự quản lý cụm k8s của mình mà không nhận được sự hỗ trợ từ cloud provider
+- Ưu điểm kops: Có thể tạo cụm k8s trên nhiều clouds provider khác nhau thậm chí on-primise. Các tool như eks, gks, ... chỉ tạo được cụm k8s trên chính cloud provider của họ, không có khả năng build cụm k8s đa nền tảng. Ngoài ra phiên bản kuberneter cài đặt là phiên bản free trên github, bạn không cần phải trả bất kỳ khoản phí nào liên quan đến kubernetes operator, nếu sử dụng các tool khác họ sẽ cài phiên bản kuberneter của riêng họ. Các tool tương tự kops: kubeadm (không hay dùng nữa vì phải config rất nhiều)
+- Nhược điểm: Bạn phải tự quản lý cụm k8s của mình mà không nhận được sự hỗ trợ từ các cloud provider
 
 Chuẩn bị
 
 - Tải kops tại [đây](https://kops.sigs.k8s.io/install/)
-- Tải aws cli về, chi tiết xem tại [đây](https://aws.amazon.com/vi/cli/)
-- Cấu hình aws cli
-```bash
-    # Chạy lệnh sau và làm theo hướng dẫn, chú ý set miền đúng với tài khoản aws của bạn, nếu không khả năng cao bạn sẽ mất phí dù thực hiện service free của aws
-    aws configure
-```
-- Bạn có thể giữ nguyên tài khoản root của aws trong aws cli, hoặc tạo tài khoản IAM user của aws để giới hạn quyền sử dụng tài khoản
+- Bạn có thể giữ nguyên config tài khoản root của aws trong aws cli hoặc tạo tài khoản IAM user của aws để giới hạn quyền sử dụng tài khoản khi sử dụng kops
 ```bash
     # Tạo tài khoản IAM
     aws iam create-group --group-name kops
@@ -114,7 +106,7 @@ Chuẩn bị
 
 Tạo cụm k8s
 
-- Kops sử dụng s3 bucket để lưu config của cụm k8s
+- Kops sử dụng s3 bucket để lưu config của cụm k8s. Tạo cụm k8s
 ```bash
     aws s3api create-bucket \
     --bucket <tự tạo tên bucket> \
@@ -122,7 +114,7 @@ Tạo cụm k8s
 ```
 - Tạo biến môi trường cho terminal session, khi chạy lệnh sau đảm bảo không tắt terminal này cho đến khi tạo xong cụm k8s trên aws
 ```
-    export NAME=<your cluster name> (ex: google.com, mycluser.k8s.local, bừa-tên.net .....)
+    export NAME=<your cluster name> (ex: bừa-tên.net, google.com, mycluser.k8s.local, .....)
     export KOPS_STATE_STORE=s3://<tên s3 bucket đã tạo>
     export ZONE=<Tến zone đã chọn>
 ```
@@ -135,8 +127,7 @@ Tạo cụm k8s
     --discovery-store={KOPS_STATE_STORE}
     --authorization=AlwaysAllow
 ```
-- Sau khi tạo thành công, kops sẽ gợi ý cho bạn 3 câu lệnh chỉnh sửa cấu hình cụm k8s và 1 câu lệnh update để triển khai k8s thật
-Hãy sử dụng những câu lệnh đó thay vì những câu lệnh sau để chỉnh sửa cấu hình cụm k8s cho hợp lý trước khi thực sự triển khai
+- Sau khi tạo thành công, kops sẽ gợi ý cho bạn 3 câu lệnh chỉnh sửa cấu hình cụm k8s và 1 câu lệnh update để triển khai k8s thật. **Hãy sử dụng những câu lệnh đó thay vì những câu lệnh sau **để chỉnh sửa cấu hình cụm k8s cho hợp lý trước khi thực sự triển khai
 ```bash
     # Chỉnh sửa metadata (câu lệnh họ cung cấp sẽ tương tự thế này)
         kops edit cluster --name ${NAME}
@@ -155,7 +146,7 @@ Hãy sử dụng những câu lệnh đó thay vì những câu lệnh sau để
 
 Kiếm tra
 ```bash
-    # Bạn có thể tạo ra bao nhiêu cụm k8s. Sử dụng lệnh sau để kiểm tra tên tất cả các cụm k8s đã tạo
+    # Bạn có thể tạo ra bao nhiêu cụm k8s tùy thích. Sử dụng lệnh sau để kiểm tra tên tất cả các cụm k8s đã tạo
     # Chú ý nó lấy thông tin về các cụm k8s trên s3 bucket đã tạo, nếu bạn tạo các cụm kops trên các s3 bucket khác nhau, bạn sẽ không thể kiểm tra được, hãy chắc chắn bạn đã chọn đúng nơi lưu trữ k8s cluster config
         kops get clusters
 
@@ -163,7 +154,7 @@ Kiếm tra
         kubectl congfig current-context
 
     # Thiết lập Kubectl context trỏ về chính xác cụm k8s bạn muốn kiểm soát
-        kops export kubecfg --name=your-cluster-name
+        kops export kubecfg --name=<your-cluster-name>
 
     # Kiểm tra số node của cụm
         kubectl get nodes
@@ -196,12 +187,10 @@ Từ bước này trở đi gần như không có sự khác biệt giữa việ
     helm install elasticsearch bitnami/elasticsearch -n elk-stack -f elasticsearch-values.yaml
     helm install kibana bitnami/kibana -n elk-stack -f kibana-values.yaml
 ```
-# Expose service ra internet
-Sử dụng nginx làm load balancer
-Tạo 
-### Nếu bạn triển khai cụm k8s bằng minikube
-- Minikube không có khả năng expose web ra open internet. Tuy nhiên bạn có thể tự tạo 1 địa chỉ ở local và sử dụng nó tại local
-- Tạo host name
+# Expose service ra internet bằng nginx open source load balancer
+## Nếu bạn triển khai cụm k8s bằng minikube
+**Minikube không có khả năng expose web ra open internet.** Tuy nhiên bạn có thể tự tạo 1 địa chỉ ở local và sử dụng nó tại local
+Tạo host name
 ```bash
     # Lấy địa chỉ ip của cụm k8s minikube
         minikube ip
@@ -209,46 +198,50 @@ Tạo
         vi /etc/hosts
     # Copy dòng sau vào file và lưu lại (mặc định DNS là example.com)
         <minikube ip> <DNS bạn muốn>
+    # ping host để kiểm tra
+        ping <DNS đã đặt>
     # Sư dụng ingress controller
         minikube addons enable ingress
     # Đợi 1 lúc và kiểm tra lại ingress controller đã chạy chưa
         kubectl get pods -n ingress-nginx
 ```
-- Điều chỉnh lại tên host theo DNS trong file ingress mà bạn đã cài, sau đó tạo ingress resource trên k8s
+Điều chỉnh lại tên host theo DNS mà bạn đã đặt trong file ingress.yaml (mặc định lầ example.com)
 ```bash
     kubectl apply -f ingress.yaml
 ```
-### Nếu bạn triển khai cụm k8s bằng kops
-- Thêm nginx controller vào cụm k8s
+## Nếu bạn triển khai cụm k8s bằng kops
+Thêm nginx controller vào cụm k8s
 ```bash
-    # Thêm repo helm cho nginx ingress
-        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-
-    # Cài đặt nginx ingress controller
-        helm install my-release ingress-nginx/ingress-nginx
+    helm install ingress bitnami/nginx -f nginx.yaml
 ```
-- Lấy địa chỉ của loadbalancer
+Lấy địa chỉ của loadbalancer
 ```bash
     # Tìm đến ingress service, bạn sẽ thấy ip ở code EXTERNAL-IP (chỉ có 1 service có nó nếu bạn chỉ triển khai 1 ingress controller)
-        kubectl get services -o wide
+    kubectl get services -o wide
 ```
-- Sau khi có địa chỉ ip của cụm k8s, làm theo hướng dẫn [sau](https://www.youtube.com/watch?v=0bmopLboeIc&t=30s) để tạo được subdomain free
-- Điều chỉnh lại tên host theo DNS trong file ingress mà bạn đã cài, sau đó tạo ingress resource trên k8s
+Sau khi có địa chỉ LoadBalacer của cụm k8s, làm theo hướng dẫn [sau](https://www.youtube.com/watch?v=0bmopLboeIc&t=30s) để tạo được subdomain free
+Điều chỉnh lại tên host theo DNS trong file ingress mà bạn đã cài, sau đó tạo ingress resource trên k8s
 ```bash
     kubectl apply -f ingress.yaml
 ```
 # Submit job lên cụm apache spark
-- Kiểm tra bạn có quyền tạo pod từ terminal của mình không
+**Mở 1 terminal riêng chỉ để submit spark app lên k8s**
+Kiểm tra bạn có quyền tạo pod từ terminal của mình không
 ```bash
     kubectl auth can-i create pods
 ```
-- Nếu bạn không có quyền xem lại bạn đang sử dụng root user hay regular user. Hoặc nếu bạn sử dụng kops, xem lại bạn có cấu hình aws cli đúng tài khoản có quyền tạo pod không
-- Khi bạn đã có quyền, chạy file sau
+Nếu bạn không có quyền xem lại bạn đang sử dụng root user hay regular user. Hoặc nếu bạn sử dụng kops, xem lại bạn có cấu hình aws cli đúng tài khoản có quyền tạo pod không
+Khi bạn đã có quyền tạo pod trên t, chạy file sau
 ```bash
     source .bash_profile
 ```
-- Submit đoạn code spark-streaming lên cụm apache spark và đoạn code crawl lên cụm k8s
+Submit đoạn code spark-streaming lên cụm apache spark và đoạn code crawl lên cụm k8s
 ```bash
     kubectl apply -f crawl-deployment.yaml
 ```
+Tạo procuducer trên k8s để crawl dữ liệu về
+```
+    kubectl apply -f 
+```
 # Kiểm tra kết quả
+Sử dụng grafana để kiểm tra lượng tài nguyên đã dùng
