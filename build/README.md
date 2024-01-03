@@ -53,13 +53,13 @@ Chuẩn bị
 
 Tạo cụm k8s
 - Triển khai cụm k8s trên **regular user**
-    ```bash
-        # Một khi đã start cụm thì sẽ không thể cung cấp tài nguyên hãy chắc chắn cung cấp đủ tài nguyên khi start minikube
-            minikube start --cpus=3 --memory=4096 --disk-size=<your disk size>
-        # Kích hoạt plugin metrics-server để có thể xem được lượng tài nguyên bằng câu lệnh kubectl top ...
-        # Nếu không thích thì không cần
-            minikube addons enable metrics-server
-    '''
+```bash
+    # Một khi đã start cụm thì sẽ không thể cung cấp tài nguyên hãy chắc chắn cung cấp đủ tài nguyên khi start minikube
+        minikube start --cpus 3 --memory 5120 --disk-size <your disk size>
+    # Kích hoạt plugin metrics-server để có thể xem được lượng tài nguyên bằng câu lệnh kubectl top ...
+    # Nếu không thích thì không cần
+        minikube addons enable metrics-server
+```
 Kiểm tra
 ```bash
     # Câu lệnh sau sẽ hiện ra số node có được sử dụng tạo cụm k8s và bạn sẽ chỉ thấy 1 node tên minikube
