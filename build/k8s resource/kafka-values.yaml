@@ -8,39 +8,14 @@ listeners:
   external:
     protocol: PLAINTEXT
 
-sasl:
-  enabledMechanisms: PLAIN
-
-tls:
-  sslClientAuth: optional
-
 controller:
-  podSecurityContext:
-    enabled: false
-  containerSecurityContext:
-    enabled: false
-  resources:
-    limits: 
-      memory: "128Mi"
-      cpu: "0.15"
   persistence:
-    size: "600Mi"
+    size: 1Gi
 
 broker:
-  replicaCount: 2
-  podSecurityContext:
-    enabled: false
-  containerSecurityContext:
-    enabled: false
-  resources:
-    limits:
-      memory: "256Mi"
-      cpu: "0.3"
+  replicaCount: 3
   persistence:
-    size: "2Gi"
-
-serviceAccounts:
-  create: false
+    size: 2Gi
 
 provisioning:
   enabled: true
@@ -51,7 +26,3 @@ provisioning:
       partitions: 2
       replicationFactor: 2
   parallel: 2
-  serviceAccount:
-    automountServiceAccountToken: false
-  podSecurityContext:
-    enabled: false
