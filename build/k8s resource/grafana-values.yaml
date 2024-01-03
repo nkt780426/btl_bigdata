@@ -1,15 +1,4 @@
 grafana:
   replicaCount: 3
-  podSecurityContext:
-    enabled: flase
-  containerSecurityContext:
-    enabled: flase
-  resources:
-    limits:
-      memory: "200Mi"
-      cpu: "0.15"
 persistence:
   size: "500Mi"
-
-serviceAccount:
-  create: false

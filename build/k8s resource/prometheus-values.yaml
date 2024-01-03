@@ -1,31 +1,11 @@
 alertmanager:
-  replicaCount: 2
-  podSecurityContext:
-    enabled: false
-  containerSecurityContext:
-    enabled: false
-  serviceAccount:
-    create: false
+  replicaCount: 3
+  service:
+    type: ClusterIP
   persistence:
-    size: "500Mi"
-  resources:
-    limits:
-      memory: "100Mi"
-      cpu: "0.1"
+    size: "200Mi"
 
 server:
   replicaCount: 3
-  podSecurityContext:
-    enabled: false
-  containerSecurityContext:
-    enabled: false
-  thanos.containerSecurityContext:
-    enabled: false
-  serviceAccount:
-    create: false
-  rbac:
-    create: false
-  resources:
-    limits:
-      memory: "200Mi"
-      cpu: "0.2"
+  service:
+    type: ClusterIP
