@@ -1,6 +1,2 @@
 worker:
   replicas: 2
-  autoscaling:
-    enabled: true
-    minReplicas: 1
-    maxReplicas: 5

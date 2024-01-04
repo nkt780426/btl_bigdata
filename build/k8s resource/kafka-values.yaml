@@ -9,13 +9,17 @@ listeners:
     protocol: PLAINTEXT
 
 controller:
-  persistence:
-    size: 1Gi
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
 
 broker:
   replicaCount: 3
-  persistence:
-    size: 2Gi
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
 
 provisioning:
   enabled: true
@@ -25,4 +29,3 @@ provisioning:
     - name: stack_exchange
       partitions: 2
       replicationFactor: 2
-  parallel: 2
